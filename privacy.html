@@ -14,10 +14,11 @@
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
   <script>
     (function () {
-      var d = document.documentElement, t = null;
-      try { t = localStorage.getItem('mm-theme'); } catch (e) {}
+      var d = document.documentElement, t = null, p = null;
+      try { t = localStorage.getItem('mm-theme'); p = localStorage.getItem('mm-motion'); } catch (e) {}
       d.dataset.theme = t === 'light' || t === 'dark' ? t : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+      if (p === 'paused') d.classList.add('paused');
     })();
   </script>
   <link rel="stylesheet" href="assets/css/site.css" />
@@ -29,6 +30,8 @@
     <defs>
       <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></g></symbol>
       <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></g></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="4.5" width="4" height="15" rx="1.3"/><rect x="14" y="4.5" width="4" height="15" rx="1.3"/></g></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.6v12.8a1.2 1.2 0 0 0 1.8 1l10-6.4a1.2 1.2 0 0 0 0-2l-10-6.4a1.2 1.2 0 0 0-1.8 1Z"/></symbol>
     </defs>
   </svg>
 
@@ -46,7 +49,11 @@
         <svg class="i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
         <svg class="i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
       </button>
-      <a class="btn btn-primary btn-sm" href="index.html#contact">Contact us</a>
+      <button class="motion-toggle" type="button" data-motion-toggle aria-pressed="false" aria-label="Pause animations">
+        <svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg>
+        <svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg>
+      </button>
+      <a class="btn btn-primary btn-sm" href="index.html#contact"><span>Contact<span class="nav-us"> us</span></span></a>
     </div>
   </header>
 

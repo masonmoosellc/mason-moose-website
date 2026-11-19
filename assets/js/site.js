@@ -1,4 +1,4 @@
-/* masonmoose.com: shared behaviour (theme toggle, headline entrance, scroll reveals, card spotlight, header). */
+/* masonmoose.com: shared behaviour (theme toggle, pause button, headline entrance, scroll reveals, card spotlight, header). */
 (function () {
   'use strict';
 
@@ -50,6 +50,39 @@
     // Back/forward restores this page from memory: show the theme chosen on the other page meanwhile.
     window.addEventListener('pageshow', function (e) {
       if (e.persisted) applyTheme(savedTheme() || (deviceLight.matches ? 'light' : 'dark'), false);
+    });
+  }
+
+  // Pause button: stops every endless animation (WCAG 2.2.2) and remembers the choice on this browser.
+  var MOTION_KEY = 'mm-motion';
+
+  function savedPaused() {
+    try { return localStorage.getItem(MOTION_KEY) === 'paused'; } catch (e) { return false; }
+  }
+
+  function applyPaused(paused, save) {
+    root.classList.toggle('paused', paused);
+    document.querySelectorAll('[data-motion-toggle]').forEach(function (b) {
+      b.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    });
+    if (save) {
+      try {
+        if (paused) localStorage.setItem(MOTION_KEY, 'paused');
+        else localStorage.removeItem(MOTION_KEY);
+      } catch (e) { /* storage blocked: the choice lasts for this visit */ }
+    }
+  }
+
+  function initPause() {
+    applyPaused(root.classList.contains('paused'), false);
+    document.querySelectorAll('[data-motion-toggle]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyPaused(!root.classList.contains('paused'), true);
+      });
+    });
+    // Back/forward restores this page from memory: show the choice made on the other page meanwhile.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) applyPaused(savedPaused(), false);
     });
   }
 
@@ -125,7 +158,7 @@
   }
 
   // Each part starts on its own, so one failure cannot stop the others (the error still reaches the console).
-  [initReveal, initTheme, initMotionPreference, initSplit, initSpotlight, initNav].forEach(function (init) {
+  [initReveal, initTheme, initPause, initMotionPreference, initSplit, initSpotlight, initNav].forEach(function (init) {
     try { init(); } catch (err) { setTimeout(function () { throw err; }); }
   });
 })();
