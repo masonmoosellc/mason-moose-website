@@ -1,167 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mason Moose LLC</title>
   <meta name="description" content="Mason Moose LLC is an independent software company building professional software and applications." />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://masonmoose.com/" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#07050f" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaff" />
 
   <!-- Open Graph / social preview -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mason Moose LLC" />
   <meta property="og:title" content="Mason Moose LLC" />
   <meta property="og:description" content="An independent software company building professional software and applications." />
   <meta property="og:url" content="https://masonmoose.com/" />
+  <meta property="og:image" content="https://masonmoose.com/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Mason Moose LLC: Apps built with care. Made to be trusted." />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <style>
-    :root {
-      --bg: #ffffff;
-      --ink: #1b1430;
-      --muted: #6b6588;
-      --border: #e9e4f2;
-      --surface: #faf8fe;
-      --violet: #412983;
-      --violet-deep: #2f1e5b;
-      --coral: #d5614c;
-      --link: #4a2f93;
-      --shadow: 0 1px 2px rgba(31,18,68,.06), 0 8px 28px rgba(47,30,91,.08);
-      --maxw: 880px;
-    }
-    * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--link); }
-    img { display: block; }
-
-    .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: #fff; padding: 10px 14px; border-radius: 8px; }
-    .skip:focus { left: 12px; top: 12px; z-index: 20; }
-
-    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-
-    /* Header */
-    header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.85); backdrop-filter: saturate(150%) blur(8px); border-bottom: 1px solid var(--border); }
-    .bar { display: flex; align-items: center; padding: 14px 0; }
-    .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); }
-    .brand__mark { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.14); }
-    .brand__name { font-weight: 680; letter-spacing: -0.01em; font-size: 1.06rem; }
-
-    /* Hero */
-    .hero { position: relative; overflow: hidden; }
-    .hero::before {
-      content: ""; position: absolute; inset: 0; z-index: -1;
-      background:
-        radial-gradient(60% 70% at 50% -10%, rgba(65,41,131,.14), transparent 60%),
-        radial-gradient(40% 50% at 85% 0%, rgba(213,97,76,.10), transparent 55%),
-        linear-gradient(180deg, #f7f4fd 0%, #ffffff 75%);
-    }
-    .hero-inner { text-align: center; padding: 60px 0 52px; }
-    .hero-logo { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 22px; box-shadow: 0 10px 28px rgba(47,30,91,.22); }
-    .hero h1 { font-size: clamp(2.05rem, 5.5vw, 3.1rem); line-height: 1.08; letter-spacing: -0.025em; margin: 0 0 18px; }
-    .hero p { font-size: 1.16rem; color: var(--muted); margin: 0 auto; max-width: 50ch; }
-    .cta-row { margin-top: 30px; display: flex; justify-content: center; }
-    .btn { text-decoration: none; font-weight: 650; font-size: 1rem; padding: 12px 22px; border-radius: 999px; transition: transform .12s, box-shadow .15s, background .15s; }
-    .btn-primary { background: var(--violet); color: #fff; box-shadow: var(--shadow); }
-    .btn-primary:hover { background: var(--violet-deep); transform: translateY(-1px); }
-
-    /* Value cards */
-    .what { padding: 18px 0 30px; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: transform .14s, box-shadow .16s, border-color .16s; }
-    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: #ddd3f0; }
-    .ico { width: 42px; height: 42px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(140deg, #4a2f93, #2f1e5b); color: #fff; margin-bottom: 14px; }
-    .ico svg { width: 22px; height: 22px; }
-    .card h2 { font-size: 1.05rem; margin: 0 0 7px; letter-spacing: -0.01em; }
-    .card p { margin: 0; color: var(--muted); font-size: .96rem; }
-
-    /* Contact */
-    .contact { padding: 56px 0; }
-    .contact-card { background: linear-gradient(140deg, #2f1e5b, #412983); color: #fff; border-radius: 22px; padding: 44px 36px; text-align: center; box-shadow: var(--shadow); }
-    .contact-card h2 { font-size: 1.5rem; margin: 0 0 8px; letter-spacing: -0.01em; }
-    .contact-card p { margin: 0 0 20px; color: #d9d2f0; }
-    .contact-card .btn-light { background: #fff; color: var(--violet-deep); }
-    .contact-card .btn-light:hover { background: #f1ecff; transform: translateY(-1px); }
-
-    /* Footer */
-    footer { border-top: 1px solid var(--border); padding: 26px 0 44px; color: var(--muted); font-size: .9rem; }
-    .foot { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
-    .foot a { color: var(--muted); text-decoration: none; }
-    .foot a:hover { color: var(--ink); }
-
-    @media (max-width: 680px) {
-      .grid { grid-template-columns: 1fr; }
-      .hero-inner { padding: 48px 0 36px; }
-      .brand__name { font-size: 1rem; }
-    }
-  </style>
+  <link rel="icon" href="assets/img/icon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/img/icon-192.png" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <script>
+    (function () {
+      var d = document.documentElement, t = null;
+      try { t = localStorage.getItem('mm-theme'); } catch (e) {}
+      d.dataset.theme = t === 'light' || t === 'dark' ? t : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/site.css" />
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header>
-    <div class="wrap">
-      <div class="bar">
-        <span class="brand">
-          <img class="brand__mark" src="assets/brand.svg" alt="" width="40" height="40" />
-          <span class="brand__name">Mason Moose LLC</span>
-        </span>
-      </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+      <symbol id="i-zap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></g></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13A4 4 0 0 1 16 11"/></g></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></g></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></g></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></g></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5L3 4Z"/></g></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></g></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="bg" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid"></div></div>
+
+  <header class="nav">
+    <div class="wrap bar">
+      <a class="brand" href="index.html"><img src="assets/img/logo-72.png" alt="" width="36" height="36" /><span>Mason Moose</span></a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#principles">Principles</a>
+        <a href="#how">How we work</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme">
+        <svg class="i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        <svg class="i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <a class="btn btn-primary btn-sm" href="#contact">Contact us</a>
     </div>
   </header>
 
   <main id="main">
+    <!-- Hero -->
     <section class="hero">
-      <div class="wrap hero-inner">
-        <img class="hero-logo" src="assets/brand.svg" alt="Mason Moose LLC logo" width="96" height="96" />
-        <h1>Software Company Based in the U.S.</h1>
-        <p>We build professional software and applications.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="mailto:contact@masonmoose.com">Get in touch</a>
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow rise" style="--d:.05s"><span class="dot"></span>Independent software company &middot; <b>U.S.-based</b></span>
+          <h1 data-split>Apps built with care. Made to be <span class="gw"><span class="grad">trusted.</span></span></h1>
+          <p class="lede rise" style="--d:.55s">Mason Moose is an independent U.S. software company. We design and build mobile apps that respect your time, your data, and your trust.</p>
+          <div class="cta-row rise" style="--d:.7s">
+            <a class="btn btn-primary" href="#contact">Get in touch <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="btn btn-ghost" href="#principles">What we stand for</a>
+          </div>
+          <div class="hero-meta rise" style="--d:.85s">
+            <span><svg aria-hidden="true"><use href="#i-pin"/></svg>Registered U.S. company</span>
+            <span><svg aria-hidden="true"><use href="#i-shield"/></svg>Privacy-minded by design</span>
+            <span><svg aria-hidden="true"><use href="#i-chat"/></svg>Real people answer email</span>
+          </div>
+        </div>
+
+        <div class="hero-art rise" style="--d:.3s" aria-hidden="true">
+          <div class="glow-disc"></div>
+          <div class="ring r2"><span class="sat"></span></div>
+          <div class="ring r1"><span class="sat"></span></div>
+          <div class="device">
+            <div class="phone">
+              <div class="notch"></div>
+              <div class="screen">
+                <div class="s-top"><div><small>Thursday</small><b>Good morning</b></div><span class="avatar"></span></div>
+                <div class="s-card">
+                  <div class="row"><small>Jobs this week</small><span class="up">&#9650; 18%</span></div>
+                  <strong>24</strong>
+                  <div class="bars">
+                    <i style="--h:38%;--n:0"></i><i style="--h:62%;--n:1"></i><i style="--h:48%;--n:2"></i><i style="--h:80%;--n:3"></i><i style="--h:56%;--n:4"></i><i style="--h:95%;--n:5"></i><i style="--h:30%;--n:6"></i>
+                  </div>
+                </div>
+                <div class="task done"><span class="check"><svg><use href="#i-check"/></svg></span>Site visit<span class="meta">9:00</span></div>
+                <div class="task done"><span class="check"><svg><use href="#i-check"/></svg></span>Send quote<span class="meta">11:30</span></div>
+                <div class="task"><span class="check"></span>Team check-in<span class="meta">2:00</span></div>
+                <div class="toast"><span class="ok"><svg><use href="#i-check"/></svg></span>Backed up and encrypted</div>
+              </div>
+            </div>
+            <div class="chip c1"><span class="ci"><svg><use href="#i-lock"/></svg></span>Private by design</div>
+            <div class="chip c2"><span class="ci"><svg><use href="#i-phone"/></svg></span>iPhone &amp; Android</div>
+            <div class="chip c3"><span class="ci"><svg><use href="#i-heart"/></svg></span>Made in the U.S.</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="what" aria-label="What we do">
+    <!-- Trust strip -->
+    <div class="strip">
+      <div class="marquee">
+        <ul class="track" aria-label="What you can count on" style="list-style:none;margin:0;padding:0">
+          <li><span><svg aria-hidden="true"><use href="#i-pin"/></svg>U.S.-based company</span></li>
+          <li><span><svg aria-hidden="true"><use href="#i-filter"/></svg>Only the data an app needs</span></li>
+          <li><span><svg aria-hidden="true"><use href="#i-lock"/></svg>Your data is never sold</span></li>
+          <li><span><svg aria-hidden="true"><use href="#i-users"/></svg>Built for small teams</span></li>
+          <li><span><svg aria-hidden="true"><use href="#i-shield"/></svg>Privacy-minded by design</span></li>
+          <li><span><svg aria-hidden="true"><use href="#i-chat"/></svg>Real people answer email</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-pin"/></svg>U.S.-based company</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-filter"/></svg>Only the data an app needs</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-lock"/></svg>Your data is never sold</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-users"/></svg>Built for small teams</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-shield"/></svg>Privacy-minded by design</span></li>
+          <li aria-hidden="true"><span><svg><use href="#i-chat"/></svg>Real people answer email</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- What we stand for -->
+    <section class="section" id="principles">
       <div class="wrap">
-        <div class="grid">
-          <div class="card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg>
-            </span>
-            <h2>Productivity-first</h2>
-            <p>Focused tools that remove busywork so the real work gets done.</p>
-          </div>
-          <div class="card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13A4 4 0 0 1 16 11"/></svg>
-            </span>
-            <h2>Built for small teams</h2>
-            <p>Software shaped around how small businesses really work.</p>
-          </div>
-          <div class="card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
-            </span>
-            <h2>Privacy-minded</h2>
-            <p>We design with privacy in mind and collect only what a product needs to work.</p>
-          </div>
+        <div class="head reveal">
+          <span class="kicker">What we stand for</span>
+          <h2>A small company with high standards.</h2>
+          <p>Three promises behind everything we ship.</p>
+        </div>
+        <div class="cards">
+          <article class="card spot reveal" style="--d:0s">
+            <div class="ico" aria-hidden="true"><svg><use href="#i-zap"/></svg></div>
+            <h3>Productivity first</h3>
+            <p>Focused tools that remove busywork, so the real work gets done.</p>
+          </article>
+          <article class="card spot reveal" style="--d:.1s">
+            <div class="ico coral" aria-hidden="true"><svg><use href="#i-users"/></svg></div>
+            <h3>Built for small teams</h3>
+            <p>Software shaped around how small businesses really work, not how big ones do.</p>
+          </article>
+          <article class="card spot reveal" style="--d:.2s">
+            <div class="ico teal" aria-hidden="true"><svg><use href="#i-shield"/></svg></div>
+            <h3>Privacy-minded</h3>
+            <p>We collect only what an app needs to work, and we never sell your data.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="contact" aria-label="Contact">
+    <!-- How we work -->
+    <section class="section" id="how">
       <div class="wrap">
-        <div class="contact-card">
-          <h2>Contact us</h2>
+        <div class="head reveal">
+          <span class="kicker">How we work</span>
+          <h2>From idea to an app you can depend on.</h2>
+        </div>
+        <div class="steps">
+          <div class="steps-line" aria-hidden="true"><span></span></div>
+          <div class="step reveal" style="--d:.1s"><span class="num">01</span><h3>Listen</h3><p>We start from the real problem a small team faces, not a feature list.</p></div>
+          <div class="step reveal" style="--d:.35s"><span class="num">02</span><h3>Design</h3><p>Clear, simple screens that respect your time and attention.</p></div>
+          <div class="step reveal" style="--d:.6s"><span class="num">03</span><h3>Build</h3><p>Careful engineering, tested on real devices, private by default.</p></div>
+          <div class="step reveal" style="--d:.85s"><span class="num">04</span><h3>Support</h3><p>Ongoing care after launch, and a real person behind every reply.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact" style="padding-top:40px">
+      <div class="wrap">
+        <div class="cta-card reveal">
+          <h2>Let&rsquo;s talk.</h2>
           <p>Questions, partnerships, or press? We&rsquo;d be glad to hear from you.</p>
-          <a class="btn btn-light" href="mailto:contact@masonmoose.com">contact@masonmoose.com</a>
+          <a class="btn btn-primary" href="mailto:contact@masonmoose.com">contact@masonmoose.com <span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </section>
@@ -169,11 +203,33 @@
 
   <footer>
     <div class="wrap">
-      <div class="foot">
-        <span>&copy; 2026 Mason Moose LLC</span>
-        <a href="privacy.html">Privacy</a>
+      <div class="foot-grid">
+        <div class="foot-about">
+          <a class="brand" href="index.html"><img src="assets/img/logo-72.png" alt="" width="36" height="36" /><span>Mason Moose LLC</span></a>
+          <p>An independent software company based in the United States.</p>
+        </div>
+        <div>
+          <h2 class="foot-h">Company</h2>
+          <ul>
+            <li><a href="#principles">Principles</a></li>
+            <li><a href="#how">How we work</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="foot-h">Legal</h2>
+          <ul>
+            <li><a href="privacy.html">Privacy notice</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; 2026 Mason Moose LLC. All rights reserved.</span>
+        <span>Made with care in the U.S.</span>
       </div>
     </div>
   </footer>
+
+  <script src="assets/js/site.js" defer></script>
 </body>
 </html>
