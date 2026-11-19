@@ -198,10 +198,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outl
 .hero-meta svg { width: 16px; height: 16px; color: var(--accent-2); }
 @media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; } .hero { padding: 36px 0 72px; } }
 
-/* Load-in: headline words rise one by one (motion only) */
-.motion .split .w { display: inline-block; opacity: 0; transform: translateY(.45em); filter: blur(8px); animation: wordIn .9s cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: calc(var(--i) * 65ms + 120ms); }
-.motion .rise { opacity: 0; transform: translateY(16px); animation: wordIn .9s cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: var(--d, .5s); }
-@keyframes wordIn { to { opacity: 1; transform: none; filter: blur(0); } }
+/* Load-in: headline words rise one by one (motion only).
+   The hidden start state lives only in the keyframes, so stopping animations (reduce motion) shows everything. */
+.motion .split .w { display: inline-block; animation: wordIn .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 65ms + 120ms); }
+.motion .rise { animation: riseIn .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: var(--d, .5s); }
+@keyframes wordIn { from { opacity: 0; transform: translateY(.45em); filter: blur(8px); } }
+@keyframes riseIn { from { opacity: 0; transform: translateY(16px); } }
+@media (max-width: 400px) { .eyebrow .eb-long { display: none; } }
+@media (min-width: 401px) { .eyebrow .eb-short { display: none; } }
+.eyebrow { white-space: nowrap; }
 
 /* ---------- Hero illustration: floating phone ---------- */
 .hero-art { position: relative; height: 600px; display: grid; place-items: center; }
@@ -299,9 +304,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outl
 .head h2 { font-size: clamp(2rem, 4.3vw, 3.1rem); font-weight: 720; margin: 14px 0 16px; }
 .head p { color: var(--muted); font-size: 1.1rem; }
 
-/* Reveal on scroll (motion only) */
-.motion .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0s); }
-.motion .reveal.in { opacity: 1; transform: none; }
+/* Reveal on scroll (motion only). Blocks hide only once site.js is running (.reveal-ready),
+   so a slow or failed script never leaves content invisible. */
+.motion .reveal { transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0s); }
+.motion.reveal-ready .reveal:not(.in) { opacity: 0; transform: translateY(26px); }
 
 /* ---------- Cards with a cursor spotlight ---------- */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -329,8 +335,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outl
 .steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; padding-top: 34px; }
 .steps-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .steps-line span { position: absolute; inset: 0; background: linear-gradient(90deg, var(--accent), var(--coral)); transform-origin: left; transform: scaleX(1); }
-.motion .steps-line span { transform: scaleX(0); transition: transform 1.8s cubic-bezier(.65, 0, .35, 1) .2s; }
-.motion .steps.in .steps-line span { transform: scaleX(1); }
+.motion .steps-line span { transition: transform 1.8s cubic-bezier(.65, 0, .35, 1) .2s; }
+.motion.reveal-ready .steps:not(.in) .steps-line span { transform: scaleX(0); }
 .step { position: relative; }
 .step::before { content: ""; position: absolute; top: -40px; left: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); box-shadow: 0 0 0 5px var(--bg); }
 .step .num { font: 600 .8rem/1 "Inter", sans-serif; color: var(--accent-2); letter-spacing: .1em; }
@@ -340,8 +346,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outl
   .steps { grid-template-columns: 1fr; padding-top: 0; padding-left: 34px; gap: 30px; }
   .steps-line { top: 0; bottom: 0; left: 6px; right: auto; width: 2px; height: auto; }
   .steps-line span { transform-origin: top; }
-  .motion .steps-line span { transform: scaleY(0); }
-  .motion .steps.in .steps-line span { transform: scaleY(1); }
+  .motion.reveal-ready .steps:not(.in) .steps-line span { transform: scaleY(0); }
   .step::before { top: 4px; left: -34px; }
 }
 
@@ -359,6 +364,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outl
 .cta-card h2 { font-size: clamp(2rem, 4.4vw, 3rem); font-weight: 740; margin-bottom: 14px; }
 .cta-card p { color: #cfc6ee; font-size: 1.1rem; max-width: 46ch; margin: 0 auto 30px; }
 .cta-card .btn-primary { background: #fff; color: #1a1236; }
+.cta-card a:focus-visible { outline-color: #fff; }
 @media (max-width: 420px) {
   .cta-card { padding: 56px 16px; }
   .cta-card .btn { font-size: .86rem; padding: 13px 16px; }
@@ -390,4 +396,8 @@ footer { border-top: 1px solid var(--border); padding: 56px 0 64px; color: var(-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
+  /* The trust strip stops scrolling, so lay every promise out in view instead */
+  .marquee { -webkit-mask-image: none; mask-image: none; }
+  .track { width: auto; flex-wrap: wrap; justify-content: center; gap: 12px 32px; padding: 0 24px; }
+  .track li[aria-hidden="true"] { display: none; }
 }

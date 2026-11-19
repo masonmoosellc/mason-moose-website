@@ -6,6 +6,13 @@
   var KEY = 'mm-theme';
   var COLORS = { dark: '#07050f', light: '#fbfaff' };
   var deviceLight = window.matchMedia('(prefers-color-scheme: light)');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Older Safari (13 and below) only has the deprecated addListener.
+  function onMediaChange(mq, fn) {
+    if (mq.addEventListener) mq.addEventListener('change', fn);
+    else if (mq.addListener) mq.addListener(fn);
+  }
 
   function savedTheme() {
     try {
@@ -37,8 +44,21 @@
       });
     });
     // Follow the device live, unless the visitor picked a theme.
-    deviceLight.addEventListener('change', function (e) {
+    onMediaChange(deviceLight, function (e) {
       if (!savedTheme()) applyTheme(e.matches ? 'light' : 'dark', false);
+    });
+    // Back/forward restores this page from memory: show the theme chosen on the other page meanwhile.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) applyTheme(savedTheme() || (deviceLight.matches ? 'light' : 'dark'), false);
+    });
+  }
+
+  // "Reduce motion" switched on mid-visit: stop the effects and show every block.
+  function initMotionPreference() {
+    onMediaChange(reduceMotion, function (e) {
+      if (!e.matches) return;
+      root.classList.remove('motion');
+      document.querySelectorAll('.reveal, .steps').forEach(function (el) { el.classList.add('in'); });
     });
   }
 
@@ -78,6 +98,8 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
     targets.forEach(function (el) { io.observe(el); });
+    // Only now may blocks start hidden: the observer that reveals them is running.
+    root.classList.add('reveal-ready');
   }
 
   function initSpotlight() {
@@ -98,9 +120,12 @@
     onScroll();
   }
 
-  initTheme();
-  document.querySelectorAll('[data-split]').forEach(splitWords);
-  initReveal();
-  initSpotlight();
-  initNav();
+  function initSplit() {
+    document.querySelectorAll('[data-split]').forEach(splitWords);
+  }
+
+  // Each part starts on its own, so one failure cannot stop the others (the error still reaches the console).
+  [initReveal, initTheme, initMotionPreference, initSplit, initSpotlight, initNav].forEach(function (init) {
+    try { init(); } catch (err) { setTimeout(function () { throw err; }); }
+  });
 })();
